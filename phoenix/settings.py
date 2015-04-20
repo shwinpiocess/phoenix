@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'south',
+    'rest_framework',
 
     'phoenix.ui',
     'phoenix.api',
@@ -86,3 +87,14 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+###############################################################################
+# REST FRAMEWORK SETTINGS
+###############################################################################
+REMOTE_HOST_HEADERS = ['REMOTE_ADDR', 'REMOTE_HOST']
+
+###############################################################################
+# AUTH TOKEN EXPIRATION TIME SETTINGS
+###############################################################################
+AUTH_TOKEN_EXPIRATION = 1800
+
