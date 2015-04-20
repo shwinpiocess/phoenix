@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=9" />
+        <title>iJobs - Only time will tell</title>
+        <base href="{{ STATIC_URL }}">
+        <link rel="stylesheet" type="text/css" title="blue" href="{{ STATIC_URL }}js/extjs4/resources/css/ext-all.css" />
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}themes/ijobs-v3/css/index.css" />
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}themes/ijobs-v3/css/ijobs.css" />
+
+        <!--<script type="text/javascript">
+        
+            var uploadUserName = "1842605324";
+            var department = " ";
+            var isAdmin = false;
+            var isAllApp = false;
+            var roleInfo = {"roleName":"开发者","appsName":"1842605324"};
+            var userRole = [1091];//用户所属业务
+            var isGeneralVersion = false;
+            var basePath = 'http://ijobs.qcloud.com:80/ijobs/';
+            var url = window.encodeURIComponent(basePath);
+            
+            var APPID = "1091";//用户的id
+            var APPNAME = roleInfo['appsName'];//用户的名称
+            var CsrfKey = "c70ae4de-8318-46fd-abe8-0c60ae8fbd23";
+        </script>-->
+    </head>
+
+    <body id="ijobs-main">
+        <!--顶部开始-->
+        <div id="header" class="top">
+
+            <div class="logo f_l"></div>
+            <!-- 左侧logo -->
+
+            <ul id="topmenu" class="nav-wrap f_l"></ul>
+            <!-- 中部菜单 -->
+
+            <!-- 右侧信息栏 -->
+            <div class="user-wrap f_r">
+                <p class="welcome-tips" >
+                    <a>Good luck，friend
+                    <a id="msg-menu" href="javascript:void(0);" class="msg-tip">&nbsp;&nbsp;</a></a>
+                    
+                </p>
+                <div id="msg-tip" class="msg-tip-box">
+                    <i></i>
+                    <ul id="msg-tip-box">
+                     </ul>
+                     <div id="msg-tip-clearBtn" class="msg-tip-clearBtn">清空</div>
+                </div>
+                
+                <div class="user-options-wrap">
+                    <ul>
+                        <li class="user-role" style="margin-right: -10px;color:#fff;font-size:14px;"  id="lblAppNames"></li>
+                        <!-- <li><s class="sepe-hr"></s></li> -->
+                        <li>
+                            <!--  <a target='_self' href="javascript:void(0)" id="lnkLogout" class="layout" title="退出"></a>-->
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <!-- 右侧信息栏 end -->
+        </div>
+        <!--顶部结束-->
+        
+        <script type="text/javascript" src="{{ STATIC_URL }}js/extjs4/bootstrap.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/extjs4/ext3-core-compat.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/extjs4/ext3-compat.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/extjs4/locale/ext-lang-zh_CN.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/main/config.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/main/config_user.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/main/config_general.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/main/config_user_general.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/extjs4/ux/TabCloseMenu.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/common/common.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/common/utils.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/main/main.js"></script>
+        
+        </script>
+    </body>
+</html>

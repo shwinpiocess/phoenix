@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=9" />
+        <title>执行临时脚本</title>
+        <base href="/static/">
+        <link rel="stylesheet" type="text/css" href="/static/js/extjs4/resources/css/ext-all-neptune.css" />
+        <script type="text/javascript">
+            
+            var hideCCScript = false;
+            var hideHand = false;
+            var defaultSpeedLimit = 10000;
+            var typeDef = {"jobType":[{"isSystemType":false,"value":0,"label":"未分类"},{"isSystemType":false,"value":1,"label":"运营发布"},{"isSystemType":false,"value":2,"label":"故障处理"},{"isSystemType":true,"value":3,"label":"一次性脚本操作"},{"isSystemType":true,"value":4,"label":"一次性传文件"},{"isSystemType":false,"value":5,"label":"常用工具"},{"isSystemType":false,"value":99,"label":"测试专用"}],"ipGetType":[{"value":1,"label":"CC脚本导入"},{"value":2,"label":"手工录入"}],"cronresultType":[{"value":0,"label":"失败"},{"value":1,"label":"启动作业成功"},{"value":2,"label":"定时任务触发"},{"value":3,"label":"前台开始处理"},{"value":4,"label":"生成作业"},{"value":5,"label":"作业通过验证"}],"runStatus":[{"value":1,"label":"未执行"},{"value":2,"label":"正在执行"},{"value":3,"label":"执行成功"},{"value":4,"label":"执行失败"},{"value":5,"label":"跳过"},{"value":6,"label":"忽略错误"},{"value":7,"label":"等待用户"},{"value":8,"label":"手动结束"},{"value":9,"label":"状态异常"},{"value":10,"label":"步骤强制终止中"},{"value":11,"label":"步骤强制终止成功"},{"value":12,"label":"步骤强制终止失败"}],"exeType":[{"value":0,"label":"无人模式"},{"value":1,"label":"单步模式"},{"value":2,"label":"混合模式"}],"stepType":[{"value":0,"label":"未定义"},{"value":1,"label":"执行脚本"},{"value":2,"label":"分发文件"},{"value":3,"label":"拉取文件"},{"value":4,"label":"文本步骤"}],"exeButtons":[{"value":0,"label":"执行"},{"value":1,"label":"跳过"},{"value":2,"label":"重新执行本步骤"},{"value":3,"label":"忽略错误"},{"value":4,"label":"提前结束作业"},{"value":5,"label":"从头执行本作业"},{"value":6,"label":"强行跳过步骤"},{"value":7,"label":"强制终止步骤"},{"value":8,"label":"进入下一步骤"}],"paramType":[{"value":1,"label":"字符串入口参数"},{"value":2,"label":"CC数据文件传参"}]}
+        
+            var appid = "1091";
+            var sk = "we like coding?!";
+            var CsrfKey = "c70ae4de-8318-46fd-abe8-0c60ae8fbd23";
+        </script>
+        <script type="text/javascript" src="/static/js/extjs4/bootstrap.js"></script>
+        <script type="text/javascript" src="/static/js/extjs4/ext3-core-compat.js"></script>
+        <script type="text/javascript" src="/static/js/extjs4/ext3-compat.js"></script>
+        <script type="text/javascript" src="/static/js/extjs4/locale/ext-lang-zh_CN.js"></script>
+        <script type="text/javascript" src="/static/js/common/common.js"></script>
+        <script type="text/javascript" src="/static/js/common/utils.js"></script>
+        <script type="text/javascript" src="/static/js/common/ux/ZeroClipboard/ZeroClipboard.min.js"></script>
+        <script type="text/javascript">
+        Ext.Loader.setPath({
+            'Ijobs.ux' : './js/common/ux',
+            'Ext.ux': './js/extjs4/ux',
+            'Ext.ijobs.task' : './js/jobs'
+        });
+        Ext.Compat.silent = true;
+        Ext.tip.QuickTipManager.init()
+            setDefaultApp(1091);
+        /**
+         * 解决grid行颜色问题
+         */
+        Ext.override(Ext.view.Table,{
+            renderRow: function(record, rowIdx, out) {
+                var me = this,
+                    isMetadataRecord = rowIdx === -1,
+                    selModel = me.selModel,
+                    rowValues = me.rowValues,
+                    itemClasses = rowValues.itemClasses,
+                    rowClasses = rowValues.rowClasses,
+                    cls,
+                    rowTpl = me.rowTpl;
+        
+                rowValues.record = record;
+                rowValues.recordId = record.internalId;
+                rowValues.recordIndex = rowIdx;
+                rowValues.rowId = me.getRowId(record);
+                rowValues.itemCls = rowValues.rowCls = '';
+                if (!rowValues.columns) {
+                    rowValues.columns = me.ownerCt.columnManager.getColumns();
+                }
+        
+                itemClasses.length = rowClasses.length = 0;
+        
+                if (!isMetadataRecord) {
+                    itemClasses[0] = Ext.baseCSSPrefix + "grid-row";
+                    if (selModel && selModel.isRowSelected) {
+                        if (selModel.isRowSelected(rowIdx + 1)) {
+                            itemClasses.push(me.beforeSelectedItemCls);
+                        }
+                        if (selModel.isRowSelected(record)) {
+                            itemClasses.push(me.selectedItemCls);
+                        }
+                    }
+        
+                    if (me.stripeRows && rowIdx % 2 !== 0) {
+                        rowClasses.push(me.altRowCls);
+                    }
+        
+                    if (me.getRowClass) {
+                        /**
+                         * 解决ext3-compat.js里的bug  974行
+                         * 原代码 cls = me.getRowClass(record, rowIdx, null, me.dataSource);
+                         */
+                        var rowParams = {
+                                body: '',
+                                bodyStyle : '',
+                                tstyle : ''
+                        };
+                        cls = me.getRowClass(record, rowIdx, rowParams, me.dataSource);
+                        if (cls) {
+                            rowClasses.push(cls);
+                        }
+                    }
+                }
+                
+                if (out) {
+                    rowTpl.applyOut(rowValues, out);
+                } else {
+                    return rowTpl.apply(rowValues);
+                }
+            }
+        });
+        
+        </script>
+        <script type="text/javascript" src="/static/js/common/ux/ComboBox.js"></script>
+        <script type="text/javascript" src="/static/js/common/ux/AppComboBox.js"></script>
+        <script type="text/javascript" src="/static/js/common/ux/AccountComboBox.js"></script>
+        <script type="text/javascript" src="/static/js/common/ux/CodeMirror/lib/codemirror.js"></script>
+        <script type="text/javascript" src="/static/js/common/ux/CodeMirror/CodeMirror.js"></script>
+        <script type="text/javascript" src="/static/js/common/ux/ZeroClipboard/ZeroClipboard.min.js"></script>
+        <script type="text/javascript" src="/static/js/common/ux/ParamInput.js"></script>
+        <script type="text/javascript" src="/static/js/common/ux/IPListPanel.js"></script>
+        <script type="text/javascript" src="/static/js/common/ux/TextFieldTrigger.js"></script>
+        <script type="text/javascript" src="/static/js/common/ux/AccountChooser.js"></script>
+        <script type="text/javascript" src="/static/js/jobs/d.min.js"></script>
+        <script type="text/javascript" src="/static/js/jobs/TempScriptUI.js"></script>
+        <script type="text/javascript" src="/static/js/jobs/TempScriptAction.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="/static/themes/ijobs-v3/css/ijobs.css" />
+        <link rel="stylesheet" type="text/css" href="/static/themes/ijobs-v3/css/index.css" />
+        <link rel="stylesheet" href="./js/common/ux/CodeMirror/lib/codemirror.css">
+        <link rel="stylesheet" href="./js/common/ux/CodeMirror/theme/erlang-dark.css">
+        
+        <script type="text/javascript">
+        
+        Ext.onReady(function(){ 
+            Ext.QuickTips.init();
+            new Ext.ijobs.task.TempScriptAction({
+                applicationId : '1091',
+                renderTo : Ext.getBody()
+            });
+            var kit = Ext.ijobs.common.Kit;
+            kit.transButtons();
+        });
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

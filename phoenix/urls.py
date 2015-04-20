@@ -4,9 +4,6 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'phoenix.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
+    url('', include('phoenix.ui.urls', namespace='ui', app_name='ui')),
     url(r'^admin/', include(admin.site.urls)),
 )
